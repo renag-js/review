@@ -3,12 +3,16 @@
     <div class="root">
       <div class="todo-container">
         <div class="todo-wrap">
-          <MyHeader @addTodo="addTodo" :todos="todos" />
-          <MyList :todos="todos" />
+          <MyHeader :addTodo="addTodo" :todos="todos" />
+          <MyList
+            :todos="todos"
+            :checkTodo="checkTodo"
+            :deleteTodo="deleteTodo"
+          />
           <MyFooter
             :todos="todos"
-            @checkAllTodo="checkAllTodo"
-            @cancelAllTodoObj="cancelAllTodoObj"
+            :checkAllTodo="checkAllTodo"
+            :cancelAllTodoObj="cancelAllTodoObj"
           />
         </div>
       </div>
@@ -28,7 +32,6 @@ export default {
   data() {
     return {
       todos: JSON.parse(localStorage.getItem("todos")) || [], //从本地浏览器中获取todos,并转为对象
-      title: "", //用户输入的值
     };
   },
 
@@ -49,15 +52,6 @@ export default {
     // 删除一个待办事项
     deleteTodo(id) {
       this.todos = this.todos.filter((todo) => id != todo.id);
-    },
-
-    // 获取item组件的id来通过id给item组件传递title
-    sendUserInputValue(id) {
-      this.todos.forEach((todoObj) => {
-        if (id == todoObj.id) this.title = todoObj.title;
-      });
-      console.log("@@@", this.title);
-      this.$bus.$emit("getUserInputValue", this.title);
     },
 
     // 全选or取消全选
@@ -82,21 +76,6 @@ export default {
         localStorage.setItem("todos", JSON.stringify(value));
       },
     },
-  },
-
-  mounted() {
-    // 通过全局事件总线给APP组件绑定自定义事件
-    // 删除
-    this.$bus.$on("deleteTodo", this.deleteTodo);
-    // 勾选
-    this.$bus.$on("checkTodo", this.checkTodo);
-    // 获取用户输入的值给item组件
-    this.$bus.$on("sendMessage", this.sendUserInputValue);
-  },
-
-  beforeDestroy() {
-    // 组件销毁的时候解绑$bus身上的自定义事件
-    this.$bus.$off(["deleteTodo", "deleteTodo", "sendUserInputValue"]);
   },
 };
 </script>

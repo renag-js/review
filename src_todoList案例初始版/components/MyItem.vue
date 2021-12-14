@@ -25,45 +25,25 @@
 export default {
   name: "MyItem",
   // props里面写属性名
-  props: ["todoObj", "todos"],
+  props: ["todoObj", "checkTodo", "deleteTodo"],
   data() {
-    return {
-      title: "", //用户输入的value值
-    };
+    return {};
   },
 
   methods: {
     // 勾选or取消勾选
     handleCheck(id) {
       // 通知APP组件将对应的todo对象的done值取反
-      // this.checkTodo(id);
-      this.$bus.$emit("checkTodo", id);
+      this.checkTodo(id);
     },
 
     // 删除代办事项
     handleDelete(id) {
-      // 直接把回调函数用箭头函数的形式写在绑定自定义事件的后面,这里必须用箭头函数,不然会有this指向问题
-      console.log(id, "***");
-      this.$bus.$on("getUserInputValue", (title) => {
-        // this.title = title; //  在这里掉过坑,一定要先绑定再触发事件(在这里我吧问题复杂化了,有更简单的写法,以后要多比较)
-      });
-      this.$bus.$emit("sendMessage", id);
-      console.log(this.title, "###");
-
-      this.todos.forEach((todoObj) => {
-        if (id == todoObj.id) this.title = todoObj.title;
-      });
-      if (confirm(`确定删除待办事项:${this.title}吗?`)) {
-        this.$bus.$emit("deleteTodo", id);
+      if (confirm(`确定删除吗?`)) {
         // 通知APP组件删除对应的待办事项
-        // this.deleteTodo(id);
+        this.deleteTodo(id);
       }
     },
-  },
-
-  beforeDestroy() {
-    // 组件销毁的时候解绑自定义事件
-    this.$bus.$off("getUserInputValue");
   },
 };
 </script>

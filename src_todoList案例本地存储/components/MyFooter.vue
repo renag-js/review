@@ -17,7 +17,7 @@
 <script>
 export default {
   name: "MyFooter",
-  props: ["todos"],
+  props: ["todos", "checkAllTodo", "cancelAllTodoObj"],
 
   computed: {
     // 全部代办事项
@@ -40,8 +40,7 @@ export default {
       },
 
       set(value) {
-        // this.checkAllTodo(value)
-        this.$emit("checkAllTodo", value);
+        this.checkAllTodo(value);
       },
     },
   },
@@ -55,8 +54,7 @@ export default {
     // 清除已完成待办事项
     cancelAll() {
       if (confirm("确定清除全部已完成事项吗?")) {
-        // this.cancelAllTodoObj()
-        this.$emit("cancelAllTodoObj");
+        this.cancelAllTodoObj();
       }
     },
   },
