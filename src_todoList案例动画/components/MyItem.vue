@@ -1,38 +1,36 @@
 <template>
-  <ul class="todo-main">
-    <li>
-      <label>
-        <input
-          type="checkbox"
-          :checked="todoObj.done"
-          @change="handleCheck(todoObj.id)"
-        />
+  <li>
+    <label>
+      <input
+        type="checkbox"
+        :checked="todoObj.done"
+        @change="handleCheck(todoObj.id)"
+      />
 
-        <!-- 如下代码也可以实现勾选功能,但是不太推荐,因为有点违背原则,,因为修改了props   ---vue不让我们直接去修改props里的数据 -->
-        <!-- props里的数据要是一个对象的话,去修改里面的数据,vue监测不到,所以不会报错,
+      <!-- 如下代码也可以实现勾选功能,但是不太推荐,因为有点违背原则,,因为修改了props   ---vue不让我们直接去修改props里的数据 -->
+      <!-- props里的数据要是一个对象的话,去修改里面的数据,vue监测不到,所以不会报错,
         但是要是props基本类型数据的话,直接去修改,vue会报错 -->
-        <!-- <input type="checkbox" v-model="todoObj.done" /> -->
-        <span v-show="!todoObj.isEdit">{{ todoObj.title }}</span>
-        <input
-          type="text"
-          :value="todoObj.title"
-          v-show="todoObj.isEdit"
-          ref="inputTitle"
-          @blur="handlerBlur(todoObj, $event)"
-        />
-      </label>
-      <button class="btn btn-danger" @click="handleDelete(todoObj.id)">
-        删除
-      </button>
-      <button
-        class="btn btn-edit"
-        @click="hanlderEdit(todoObj)"
-        v-show="!todoObj.isEdit"
-      >
-        编辑
-      </button>
-    </li>
-  </ul>
+      <!-- <input type="checkbox" v-model="todoObj.done" /> -->
+      <span v-show="!todoObj.isEdit">{{ todoObj.title }}</span>
+      <input
+        type="text"
+        :value="todoObj.title"
+        v-show="todoObj.isEdit"
+        ref="inputTitle"
+        @blur="handlerBlur(todoObj, $event)"
+      />
+    </label>
+    <button class="btn btn-danger" @click="handleDelete(todoObj.id)">
+      删除
+    </button>
+    <button
+      class="btn btn-edit"
+      @click="hanlderEdit(todoObj)"
+      v-show="!todoObj.isEdit"
+    >
+      编辑
+    </button>
+  </li>
 </template>
 
 <script>
@@ -152,23 +150,6 @@ li {
     display: none;
     margin-top: 3px;
   }
-}
-
-/*main*/
-.todo-main {
-  margin-left: 0px;
-  border: 1px solid #ddd;
-  border-radius: 2px;
-  padding: 0px;
-}
-
-.todo-empty {
-  height: 40px;
-  line-height: 40px;
-  border: 1px solid #ddd;
-  border-radius: 2px;
-  padding-left: 5px;
-  margin-top: 10px;
 }
 
 li:hover {
