@@ -3,7 +3,6 @@
     <h1>当前求和为{{ sum }}</h1>
     <h3>当前求和放大10倍后为{{ bigSum }}</h3>
     <h3>我在{{ school }},学习{{ subject }}</h3>
-    <h3 style="color: red">Person组件的总人数是:{{ personList.length }}</h3>
 
     <select v-model.number="n">
       <option value="1">1</option>
@@ -32,24 +31,48 @@ export default {
     // 使用mapState辅助函数生成计算属性,从state里面的读取数据---(对象写法)
     // ...mapState({ sum: "sum", school: "school", subject: "subject" }),
     // 数组写法:意思是生成的计算属性名是sum,而且你要去Vuex的state里面读取的属性名也是sum,必须加引号
-    // 开启了命名空间namespaced:true之后才能像下面这样写,不然只能自己去获取到modules对象里面的属性,然后把属性值.出来(剩下三个map辅助函数同理)
-    ...mapState("countOptions", ["sum", "school", "subject"]),
-    ...mapState("personOptions", ["personList"]),
+    ...mapState(["sum", "school", "subject"]),
     // 使用mapGetters辅助函数生成计算属性,从getters里面的读取数据(对象写法)
     // ...mapGetters({ bigSum: "bigSum" }),
     // 使用mapGetters辅助函数生成计算属性,从getters里面的读取数据(数组写法)
-    ...mapGetters("countOptions", ["bigSum"]),
+    ...mapGetters(["bigSum"]),
   },
 
   methods: {
+    // 程序员亲自写方法
+    // increment() {
+    // 这里提交的increment函数必须在actions里有
+    // 沒有业务逻辑的话可以直接调用commit去mutations
+    // this.$store.commit("INCREMENT", this.n);
+    // },
+    // decrement() {
+    //   this.$store.commit("DECREMENT", this.n);
+    // },
+
     // 借助mapMuattions辅助函数去生成对应的方法,方法中会调用commit去联系mutations,要是生成的方法中有传递参数的话则要在模板中绑定事件的时候把参数传递进来,不然会默认传入event事件---比如increment方法需要传递参数(对象写法)
-    ...mapMutations("countOptions", {
-      increment: "INCREMENT",
-      decrement: "DECREMENT",
-    }),
+    ...mapMutations({ increment: "INCREMENT", decrement: "DECREMENT" }),
+    // 借助mapMuattions辅助函数去生成对应的方法,方法中会调用commit去联系mutations(数组写法)
+    // 方法名必须和mutations里的方法名一致
+    // ...mapMutations(["INCREMENT", "DECREMENT"]),
+
+    /* **********************************************************  */
+
+    // 程序员亲自调用方法
+    // incrementOdd() {
+    //   this.$store.dispatch("incrementOdd", this.n);
+    // },
+    // incrementWait() {
+    //   this.$store.dispatch("incrementWait", this.n);
+    // },
+
+    // 借助mapActions辅助函数去生成对应的方法(对象写法),前面是需要生成的方法名,后面是actions里定义的方法名
+    // ...mapActions({
+    //   incrementOdd: "incrementOdd",
+    //   incrementWait: "incrementWait",
+    // }),
 
     // 借助mapActions辅助函数去生成对应的方法(数组写法),方法名必须和actions里保持一致,列如incrementOdd
-    ...mapActions("countOptions", ["incrementOdd", "incrementWait"]),
+    ...mapActions(["incrementOdd", "incrementWait"]),
   },
 };
 </script> 

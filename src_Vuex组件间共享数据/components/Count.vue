@@ -32,24 +32,19 @@ export default {
     // 使用mapState辅助函数生成计算属性,从state里面的读取数据---(对象写法)
     // ...mapState({ sum: "sum", school: "school", subject: "subject" }),
     // 数组写法:意思是生成的计算属性名是sum,而且你要去Vuex的state里面读取的属性名也是sum,必须加引号
-    // 开启了命名空间namespaced:true之后才能像下面这样写,不然只能自己去获取到modules对象里面的属性,然后把属性值.出来(剩下三个map辅助函数同理)
-    ...mapState("countOptions", ["sum", "school", "subject"]),
-    ...mapState("personOptions", ["personList"]),
+    ...mapState(["sum", "school", "subject", "personList"]),
     // 使用mapGetters辅助函数生成计算属性,从getters里面的读取数据(对象写法)
     // ...mapGetters({ bigSum: "bigSum" }),
     // 使用mapGetters辅助函数生成计算属性,从getters里面的读取数据(数组写法)
-    ...mapGetters("countOptions", ["bigSum"]),
+    ...mapGetters(["bigSum"]),
   },
 
   methods: {
     // 借助mapMuattions辅助函数去生成对应的方法,方法中会调用commit去联系mutations,要是生成的方法中有传递参数的话则要在模板中绑定事件的时候把参数传递进来,不然会默认传入event事件---比如increment方法需要传递参数(对象写法)
-    ...mapMutations("countOptions", {
-      increment: "INCREMENT",
-      decrement: "DECREMENT",
-    }),
+    ...mapMutations({ increment: "INCREMENT", decrement: "DECREMENT" }),
 
     // 借助mapActions辅助函数去生成对应的方法(数组写法),方法名必须和actions里保持一致,列如incrementOdd
-    ...mapActions("countOptions", ["incrementOdd", "incrementWait"]),
+    ...mapActions(["incrementOdd", "incrementWait"]),
   },
 };
 </script> 
