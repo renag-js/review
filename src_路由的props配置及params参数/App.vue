@@ -12,27 +12,13 @@
           <!-- Vue中借助router-link实现路由的切换 -->
           <!-- 默认展示的组件样式必须加exact,不然切换的时候默认组件的样式不会丢失 -->
           <router-link
-            to="/"
-            class="list-group-item"
-            active-class="active"
-            :to="{ name: 'index' }"
-            exact
-          >
-            默认展示页面(首页)
-          </router-link>
-          <router-link
-            replace
             class="list-group-item"
             active-class="active"
             :to="{ name: 'about' }"
+            exact
             >About</router-link
           >
-          <!-- 默认浏览器开启的是push模式,开启replace模式需要写replace属性---完整写法:replace:"true" -->
-          <router-link
-            class="list-group-item"
-            active-class="active"
-            to="/home"
-            replace
+          <router-link class="list-group-item" active-class="active" to="/home"
             >Home</router-link
           >
         </div>
